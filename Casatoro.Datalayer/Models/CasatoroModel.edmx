@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CasatoroDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreMarca" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehiculos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Placa" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MarcaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreVendedor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CedulaVendedor" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValorVenta" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NombreComprador" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FechaVenta" Type="datetime" Nullable="false" />
+          <Property Name="VendedorId" Type="int" Nullable="false" />
+          <Property Name="Vehiculos_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CasatoroDB.dbo.VistaVentas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VistaVentas">
+          <Key>
+            <PropertyRef Name="Venta" />
+            <PropertyRef Name="Comprador" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Vendedor" />
+            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Placa" />
+            <PropertyRef Name="Color" />
+            <PropertyRef Name="Marca" />
+          </Key>
+          <Property Name="Venta" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Comprador" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Vendedor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cedula" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Placa" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Marca" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MarcaVehiculo">
+          <End Role="Marcas" Type="Self.Marcas" Multiplicity="1" />
+          <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehiculos">
+              <PropertyRef Name="MarcaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VehiculoVenta">
+          <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehiculos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="Vehiculos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentaVendedor">
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_lista_vendedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="NombreVendedor" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="CedulaVendedor" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_lista_ventas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Vendedor" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Cedula" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Venta" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Comprador" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Placa" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Fecha" Type="char" MaxLength="10" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_obtener_vendedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVendedor" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="NombreVendedor" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="CedulaVendedor" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_Crear_Marca" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NombreMarca" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Editar_Vendedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVendedor" Type="int" Mode="In" />
+          <Parameter Name="NombreVendedor" Type="varchar" Mode="In" />
+          <Parameter Name="CedulaVendedor" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Eliminar_Venta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdVenta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_VehiculosByCedula" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cedula" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CasatoroDBModelStoreContainer">
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehiculos" EntityType="Self.Vehiculos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VistaVentas" EntityType="Self.VistaVentas" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[VistaVentas].[Venta] AS [Venta], 
+[VistaVentas].[Comprador] AS [Comprador], 
+[VistaVentas].[Fecha] AS [Fecha], 
+[VistaVentas].[Vendedor] AS [Vendedor], 
+[VistaVentas].[Cedula] AS [Cedula], 
+[VistaVentas].[Placa] AS [Placa], 
+[VistaVentas].[Color] AS [Color], 
+[VistaVentas].[Marca] AS [Marca]
+FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_MarcaVehiculo" Association="Self.FK_MarcaVehiculo">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Vehiculos" EntitySet="Vehiculos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VehiculoVenta" Association="Self.FK_VehiculoVenta">
+            <End Role="Vehiculos" EntitySet="Vehiculos" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaVendedor" Association="Self.FK_VentaVendedor">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CasatoroDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fn_lista_vendedores_Result">
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="NombreVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CedulaVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_lista_ventas_Result">
+          <Property Name="Vendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cedula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Venta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comprador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Placa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="fn_obtener_vendedor_Result">
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="NombreVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CedulaVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreMarca" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Vehiculos" Relationship="Self.FK_MarcaVehiculo" FromRole="Marcas" ToRole="Vehiculos" />
+        </EntityType>
+        <EntityType Name="Vehiculos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Placa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MarcaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Marcas" Relationship="Self.FK_MarcaVehiculo" FromRole="Vehiculos" ToRole="Marcas" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK_VehiculoVenta" FromRole="Vehiculos" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Vendedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CedulaVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK_VentaVendedor" FromRole="Vendedores" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValorVenta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreComprador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaVenta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VendedorId" Type="Int32" Nullable="false" />
+          <Property Name="Vehiculos_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Vehiculos" Relationship="Self.FK_VehiculoVenta" FromRole="Ventas" ToRole="Vehiculos" />
+          <NavigationProperty Name="Vendedores" Relationship="Self.FK_VentaVendedor" FromRole="Ventas" ToRole="Vendedores" />
+        </EntityType>
+        <EntityType Name="VistaVentas">
+          <Key>
+            <PropertyRef Name="Venta" />
+            <PropertyRef Name="Comprador" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Vendedor" />
+            <PropertyRef Name="Cedula" />
+            <PropertyRef Name="Placa" />
+            <PropertyRef Name="Color" />
+            <PropertyRef Name="Marca" />
+          </Key>
+          <Property Name="Venta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comprador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Vendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cedula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Placa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MarcaVehiculo">
+          <End Role="Marcas" Type="Self.Marcas" Multiplicity="1" />
+          <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehiculos">
+              <PropertyRef Name="MarcaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VehiculoVenta">
+          <End Role="Vehiculos" Type="Self.Vehiculos" Multiplicity="1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehiculos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="Vehiculos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentaVendedor">
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CasatoroDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" />
+          <EntitySet Name="Vehiculos" EntityType="Self.Vehiculos" />
+          <EntitySet Name="Vendedores" EntityType="Self.Vendedores" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+          <EntitySet Name="VistaVentas" EntityType="Self.VistaVentas" />
+          <AssociationSet Name="FK_MarcaVehiculo" Association="Self.FK_MarcaVehiculo">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Vehiculos" EntitySet="Vehiculos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VehiculoVenta" Association="Self.FK_VehiculoVenta">
+            <End Role="Vehiculos" EntitySet="Vehiculos" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaVendedor" Association="Self.FK_VentaVendedor">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <FunctionImport Name="fn_lista_vendedores" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_lista_vendedores_Result)" />
+          <FunctionImport Name="fn_lista_ventas" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_lista_ventas_Result)" />
+          <FunctionImport Name="fn_obtener_vendedor" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_obtener_vendedor_Result)">
+            <Parameter Name="IdVendedor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Crear_Marca">
+            <Parameter Name="NombreMarca" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Editar_Vendedor">
+            <Parameter Name="IdVendedor" Mode="In" Type="Int32" />
+            <Parameter Name="NombreVendedor" Mode="In" Type="String" />
+            <Parameter Name="CedulaVendedor" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Eliminar_Venta">
+            <Parameter Name="IdVenta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_VehiculosByCedula" ReturnType="Collection(CasatoroDBModel.sp_VehiculosByCedula_Result)">
+            <Parameter Name="Cedula" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_VehiculosByCedula_Result">
+          <Property Type="String" Name="Vendedor" Nullable="false" />
+          <Property Type="String" Name="Cedula" Nullable="false" />
+          <Property Type="String" Name="Venta" Nullable="false" />
+          <Property Type="String" Name="Comprador" Nullable="false" />
+          <Property Type="String" Name="Placa" Nullable="false" />
+          <Property Type="String" Name="Color" Nullable="false" />
+          <Property Type="String" Name="Marca" Nullable="false" />
+          <Property Type="String" Name="Fecha" Nullable="true" MaxLength="10" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CasatoroDBModelStoreContainer" CdmEntityContainer="CasatoroDBEntities">
+          <EntitySetMapping Name="Marcas">
+            <EntityTypeMapping TypeName="CasatoroDBModel.Marcas">
+              <MappingFragment StoreEntitySet="Marcas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreMarca" ColumnName="NombreMarca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehiculos">
+            <EntityTypeMapping TypeName="CasatoroDBModel.Vehiculos">
+              <MappingFragment StoreEntitySet="Vehiculos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Placa" ColumnName="Placa" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="MarcaId" ColumnName="MarcaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendedores">
+            <EntityTypeMapping TypeName="CasatoroDBModel.Vendedores">
+              <MappingFragment StoreEntitySet="Vendedores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
+                <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="CasatoroDBModel.Ventas">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ValorVenta" ColumnName="ValorVenta" />
+                <ScalarProperty Name="NombreComprador" ColumnName="NombreComprador" />
+                <ScalarProperty Name="FechaVenta" ColumnName="FechaVenta" />
+                <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+                <ScalarProperty Name="Vehiculos_Id" ColumnName="Vehiculos_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VistaVentas">
+            <EntityTypeMapping TypeName="CasatoroDBModel.VistaVentas">
+              <MappingFragment StoreEntitySet="VistaVentas">
+                <ScalarProperty Name="Venta" ColumnName="Venta" />
+                <ScalarProperty Name="Comprador" ColumnName="Comprador" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Placa" ColumnName="Placa" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_lista_vendedores" FunctionImportName="fn_lista_vendedores">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CasatoroDBModel.fn_lista_vendedores_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
+                <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_lista_ventas" FunctionImportName="fn_lista_ventas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CasatoroDBModel.fn_lista_ventas_Result">
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Venta" ColumnName="Venta" />
+                <ScalarProperty Name="Comprador" ColumnName="Comprador" />
+                <ScalarProperty Name="Placa" ColumnName="Placa" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_obtener_vendedor" FunctionImportName="fn_obtener_vendedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CasatoroDBModel.fn_obtener_vendedor_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
+                <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Crear_Marca" FunctionName="CasatoroDBModel.Store.sp_Crear_Marca" />
+          <FunctionImportMapping FunctionImportName="sp_Editar_Vendedor" FunctionName="CasatoroDBModel.Store.sp_Editar_Vendedor" />
+          <FunctionImportMapping FunctionImportName="sp_Eliminar_Venta" FunctionName="CasatoroDBModel.Store.sp_Eliminar_Venta" />
+          <FunctionImportMapping FunctionImportName="sp_VehiculosByCedula" FunctionName="CasatoroDBModel.Store.sp_VehiculosByCedula">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CasatoroDBModel.sp_VehiculosByCedula_Result">
+                <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Venta" ColumnName="Venta" />
+                <ScalarProperty Name="Comprador" ColumnName="Comprador" />
+                <ScalarProperty Name="Placa" ColumnName="Placa" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
