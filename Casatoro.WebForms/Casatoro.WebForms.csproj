@@ -124,6 +124,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\FormularioVendedor.aspx" />
     <Content Include="Pages\Images\logo.png" />
     <Content Include="Pages\ListaVendedores.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -213,6 +214,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FormularioVendedor.aspx.cs">
+      <DependentUpon>FormularioVendedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\FormularioVendedor.aspx.designer.cs">
+      <DependentUpon>FormularioVendedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\ListaVendedores.aspx.cs">
       <DependentUpon>ListaVendedores.aspx</DependentUpon>

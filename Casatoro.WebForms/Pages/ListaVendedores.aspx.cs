@@ -27,9 +27,9 @@ namespace Casatoro.WebForms.Pages
 
         protected void EditarVendedor_OnClick(object sender, EventArgs e)
         {
-            //LinkButton editarVendedorbtn = (LinkButton)sender;
-            //string Id = editarVendedorbtn.CommandArgument;
-            //Response.Redirect($"~/Pages/FormularioVendedor.aspx?id={Id}");
+            LinkButton editarVendedorbtn = (LinkButton)sender;
+            string Id = editarVendedorbtn.CommandArgument;
+            Response.Redirect($"~/Pages/FormularioVendedor.aspx?id={Id}");
         }
     }
 }
