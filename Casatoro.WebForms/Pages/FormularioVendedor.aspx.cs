@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Casatoro.Entities;
 
 namespace Casatoro.WebForms.Pages
 {
@@ -45,7 +46,7 @@ namespace Casatoro.WebForms.Pages
 
         protected void btnSubmit_OnClick(object sender, EventArgs e)
         {
-            bool respuesta;
+            var respuesta = new ResponseBase<Vendedores>();
 
             Vendedores vendedor = new Vendedores()
             {
@@ -58,15 +59,18 @@ namespace Casatoro.WebForms.Pages
             {
                 respuesta = vendedorBl.EditarVendedor(vendedor);
 
-                if (respuesta)
-                {
+                if (respuesta.IsValid) {
+
                     Response.Redirect("~/Pages/ListaVendedores.aspx");
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('No se pudo realizar la operación)", true);
-
+                    errorLabel.Text = respuesta.Message;
                 }
+            }
+            else
+            {
+                
             }
 
         }

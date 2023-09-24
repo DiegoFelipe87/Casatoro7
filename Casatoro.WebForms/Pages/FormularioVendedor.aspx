@@ -12,4 +12,12 @@
     </div>
     <br/>
     <asp:Button ID="btnSubmit" runat="server" Text="Enviar" CssClass="btn btn-lg btn-success" OnClick="btnSubmit_OnClick" />
+    <br/>
+
+    <div class="focus-ring-warning">
+        <br/>
+
+    <asp:Label runat="server" CssClass="text-danger" ID="errorLabel"></asp:Label>
+    </div>
+    
 </asp:Content>

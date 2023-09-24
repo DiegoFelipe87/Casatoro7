@@ -42,9 +42,9 @@ namespace Casatoro.BussinessLayer
         }
 
 
-        public bool EditarVendedor(Vendedores vendedor)
+        public ResponseBase<Vendedores> EditarVendedor(Vendedores vendedor)
         {
-            return vendedorDl.EditarVendedorRB(vendedor).Result.IsValid;
+            return vendedorDl.EditarVendedorRB(vendedor).Result;
         }
     }
 

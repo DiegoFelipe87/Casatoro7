@@ -275,6 +275,10 @@
       <Project>{BF295759-B093-4292-AA51-85B70BE88D0F}</Project>
       <Name>Casatoro.Datalayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Casatoro.Entities\Casatoro.Entities.csproj">
+      <Project>{a837f6cf-814b-4556-b15b-c12993d56996}</Project>
+      <Name>Casatoro.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

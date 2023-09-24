@@ -11,7 +11,7 @@ namespace Casatoro.Entities
         public const string ResponseOk = "Transacción exitosa";
         public const string ResponseException = "Se ha encontrado un error en la ejecución.";
         public const string NotFound = "No hay informacion.";
-        public const string ObservationFieldDuplicated = "Ya existe un vendedor con ese número de cédula";
+        public const string ObservationFieldDuplicated = " Ya existe un vendedor con ese número de cédula";
     }
 
 }

@@ -31,5 +31,10 @@ namespace Casatoro.WebForms.Pages
             string Id = editarVendedorbtn.CommandArgument;
             Response.Redirect($"~/Pages/FormularioVendedor.aspx?id={Id}");
         }
+
+        protected void NuevoVendedor_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Pages/FormularioVendedor.aspx?idEmpleado=0");
+        }
     }
 }
