@@ -33,18 +33,33 @@ namespace Casatoro.Pruebas
             ////Prueba para metodo ObtenerVendedor
             //var vendedor = vendedorDl.ObtenerVendedorPorId(1);
 
-            //Prueba metodo EditarVendedor
-            var vendedorEditado = new Vendedores()
+            ////Prueba metodo EditarVendedor
+            //var vendedorEditado = new Vendedores()
+            //{
+            //    Id = 3,
+            //    NombreVendedor = "Felipe Silva",
+            //    CedulaVendedor = "112233"
+            //};
+
+            //var vendedor = vendedorDl.EditarVendedorRB(vendedorEditado);
+            //var mensaje = vendedor.Result.Message;
+            //var listado = vendedor.Result.DataSingle;
+
+            //Prueba EliminarVendedor
+
+            var vendedorAEliminar = new Vendedores()
             {
-                Id = 3,
-                NombreVendedor = "Felipe Silva",
-                CedulaVendedor = "112233"
+                    Id = 13,
+                    NombreVendedor = "Juanito Ocho",
+                    CedulaVendedor = "888"
             };
 
-            var vendedor = vendedorDl.EditarVendedorRB(vendedorEditado);
-            var mensaje = vendedor.Result.Message;
-            var listado = vendedor.Result.DataSingle;
+            var vendedorEliminado = vendedorDl.EliminarVendedor(vendedorAEliminar);
+
+            var mensaje = vendedorEliminado.Result.Message;
+            var vendedor = vendedorEliminado.Result.DataSingle;
+
 
         }
-    }
+        }
 }

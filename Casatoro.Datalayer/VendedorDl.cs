@@ -124,32 +124,6 @@ namespace Casatoro.Datalayer
 
 
         /// <summary>
-        /// Metodo para buscar las ventas ingresando el numero de cédula de un vendedor
-        /// </summary>
-        /// <param name="cedulaVendedor"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public List<sp_VehiculosByCedula_Result> BuscarVentasPorCedula(string cedulaVendedor)
-        {
-            var buscarVentasPorCedula = new List<sp_VehiculosByCedula_Result>();
-
-            try
-            {
-                using (var dbContext = new CasatoroDBEntities())
-                {
-                    buscarVentasPorCedula = dbContext.sp_VehiculosByCedula(cedulaVendedor).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Messages.ResponseException + ex.Message);
-            }
-
-            return buscarVentasPorCedula;
-        }
-
-
-        /// <summary>
         /// Metodo para obtener un vendedor por medio de su Id
         /// </summary>
         /// <param name="idVendedor"></param>
@@ -222,6 +196,34 @@ namespace Casatoro.Datalayer
                 objResponse.Message = Messages.ResponseException + ex.Message;
             }
             
+            return objResponse;
+        }
+
+        public async Task<ResponseBase<Vendedores>> EliminarVendedor(Vendedores vendedorAEliminar)
+        {
+            var objResponse = new ResponseBase<Vendedores>();
+            var vendedorEliminado = new Vendedores();
+            try
+            {
+                using (var dbContext = new CasatoroDBEntities())
+                {
+                    var vendedorEncontradoPorId = dbContext.Vendedores.ToList().Find(x => x.Id == vendedorAEliminar.Id);
+
+                    dbContext.Vendedores.Remove(vendedorEncontradoPorId);
+                    dbContext.SaveChanges();
+                    vendedorEliminado = vendedorEncontradoPorId;
+                }
+
+                objResponse.DataSingle = vendedorEliminado;
+                objResponse.IsValid = true;
+                objResponse.Message = Messages.ResponseOk;
+            }
+            catch (Exception ex)
+            {
+                objResponse.IsValid = false;
+                objResponse.Message = Messages.ResponseException;
+            }
+
             return objResponse;
         }
     }

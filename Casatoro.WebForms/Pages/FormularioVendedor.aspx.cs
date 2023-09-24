@@ -25,13 +25,10 @@ namespace Casatoro.WebForms.Pages
                 {
                     IdVendedor = Convert.ToInt32(Request.QueryString["Id"].ToString());
 
+                    if (IdVendedor != 0) {
 
-                    if (IdVendedor != 0)
-                    {
-
-                        //btnSubmit.Text = "Actualizar";
+                        btnSubmit.Text = "Actualizar";
                         Vendedores vendedor = vendedorBl.ObtenerVendedorPorId(IdVendedor);
-
                         txtNombreVendedor.Text = vendedor.NombreVendedor;
                         txtCedulaVendedor.Text = vendedor.CedulaVendedor;
                     }
@@ -59,10 +56,8 @@ namespace Casatoro.WebForms.Pages
             {
                 respuesta = vendedorBl.EditarVendedor(vendedor);
 
-                if (respuesta.IsValid) {
-
+                if (respuesta.IsValid)
                     Response.Redirect("~/Pages/ListaVendedores.aspx");
-                }
                 else
                 {
                     errorLabel.Text = respuesta.Message;
@@ -70,9 +65,18 @@ namespace Casatoro.WebForms.Pages
             }
             else
             {
-                
-            }
+                var nombreNuevoVendedor = txtNombreVendedor.Text.ToString();
+                var cedulaNuevoVendedor = txtCedulaVendedor.Text.ToString();
 
+                respuesta = vendedorBl.CrearVendedor(nombreNuevoVendedor, cedulaNuevoVendedor);
+                
+                if (respuesta.IsValid)
+                    Response.Redirect("~/Pages/ListaVendedores.aspx");
+                else
+                {
+                    errorLabel.Text = respuesta.Message;
+                }
+            }
         }
     }
 }

@@ -41,10 +41,34 @@ namespace Casatoro.BussinessLayer
             return vendedor;
         }
 
-
+        /// <summary>
+        /// Metodo para editar un vendedor
+        /// </summary>
+        /// <param name="vendedor"></param>
+        /// <returns></returns>
         public ResponseBase<Vendedores> EditarVendedor(Vendedores vendedor)
         {
-            return vendedorDl.EditarVendedorRB(vendedor).Result;
+            var objResponse = new ResponseBase<Vendedores>();
+
+            objResponse = vendedorDl.EditarVendedorRB(vendedor).Result;
+
+            return objResponse;
+        }
+
+
+        /// <summary>
+        /// Metodo para crear un vendedor
+        /// </summary>
+        /// <param name="nombreVendedor"></param>
+        /// <param name="cedulaVendedor"></param>
+        /// <returns></returns>
+        public ResponseBase<Vendedores> CrearVendedor(string nombreVendedor, string cedulaVendedor)
+        {
+            var objResponse = new ResponseBase<Vendedores>();
+
+            objResponse = vendedorDl.CrearVendedorRB(nombreVendedor, cedulaVendedor).Result;
+
+            return objResponse;
         }
     }
 

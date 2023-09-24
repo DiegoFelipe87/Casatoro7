@@ -34,7 +34,7 @@ namespace Casatoro.WebForms.Pages
 
         protected void NuevoVendedor_OnClick(object sender, EventArgs e)
         {
-            Response.Redirect("~/Pages/FormularioVendedor.aspx?idEmpleado=0");
+            Response.Redirect("~/Pages/FormularioVendedor.aspx?id=0");
         }
     }
 }
