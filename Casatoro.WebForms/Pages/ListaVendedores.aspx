@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
             <h2>Listado de Vendedores</h2>
         </div>
-        <div class="col-6">
+        <div class="col-3">
             <asp:TextBox ID="CuadroBuscar" runat="server"></asp:TextBox>
             <asp:Button ID="BotonBuscar" OnClick="BotonBuscar_OnClick" CommandArgument="" runat="server" Text="Buscar" />
         </div>
@@ -25,10 +25,11 @@
     <br/>
     
     <div class="row">
-        <div class="col-9">
+        <div class="col-7">
             <asp:GridView ID="GVListaVendedores" CssClass="table table-striped" AutoGenerateColumns="False" runat="server">
 
                 <Columns>
+                    <asp:BoundField DataField="Id" HeaderText="Id" />
                     <asp:BoundField DataField="NombreVendedor" HeaderText="Vendedor" />
                     <asp:BoundField DataField="CedulaVendedor" HeaderText="Cedula" />
                     <asp:TemplateField>

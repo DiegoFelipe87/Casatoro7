@@ -18,12 +18,13 @@ namespace Casatoro.WebForms.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ListarVendedores();
+            var texto = CuadroBuscar.Text;
+            ListarVendedores(texto);
         }
 
-        private void ListarVendedores()
+        private void ListarVendedores(string texto)
         {
-            var listaVendedores = vendedorBl.ListaVendedores();
+            var listaVendedores = vendedorBl.BuscarVendedor(texto).DataSingle;
             GVListaVendedores.DataSource = listaVendedores;
             GVListaVendedores.DataBind();
         }
