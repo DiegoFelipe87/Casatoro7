@@ -58,7 +58,21 @@ namespace Casatoro.WebForms.Pages
 
         protected void BotonBuscar_OnClick(object sender, EventArgs e)
         {
-            var textoIngresado = CuadroBuscar.Text;
+
+            var respuesta = new ResponseBase<List<Vendedores>>();
+
+            var texto = CuadroBuscar.Text;
+
+            respuesta = vendedorBl.BuscarVendedor(texto);
+
+            if (respuesta.IsValid)
+            {
+                var listaVendedoresEncontrados = respuesta.DataSingle;
+                GVListaVendedores.DataSource = listaVendedoresEncontrados;
+                GVListaVendedores.DataBind();
+            }
+
+
 
 
         }

@@ -199,9 +199,27 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-        public async Task<ResponseBase<List<Vendedores>>> BuscarVendedor(string texto)
+        public async Task<ResponseBase<List<Vendedores>>> BuscarVendedorRB(string texto)
         {
             var objResponse = new ResponseBase<List<Vendedores>>();
+            var listaVendedoresEncontrados = new List<Vendedores>();
+            try
+            {
+                using (var dbContext = new CasatoroDBEntities())
+                {
+                     listaVendedoresEncontrados = dbContext.Vendedores.Where(x => x.NombreVendedor.Contains(texto) || x.CedulaVendedor.Contains(texto)).ToList();
+                }
+
+                objResponse.DataSingle = listaVendedoresEncontrados;
+                objResponse.IsValid = true;
+                objResponse.Message = Messages.ResponseOk;
+            }
+            catch (Exception ex)
+            {
+                objResponse.IsValid = false;
+                objResponse.Message = Messages.ResponseException;
+            }
+
             return objResponse;
         }
     }

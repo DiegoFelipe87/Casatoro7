@@ -49,6 +49,15 @@ namespace Casatoro.BussinessLayer
             objResponse = vendedorDl.EliminarVendedorRB(idVendedor).Result;
             return objResponse;
         }
+
+        public ResponseBase<List<Vendedores>> BuscarVendedor(string texto)
+        {
+            var objResponse = new ResponseBase<List<Vendedores>>();
+            objResponse = vendedorDl.BuscarVendedorRB(texto).Result;
+            return objResponse;
+        }
+
+
     }
 
     

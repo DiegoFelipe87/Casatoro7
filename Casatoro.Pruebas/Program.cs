@@ -47,12 +47,19 @@ namespace Casatoro.Pruebas
 
             //Prueba EliminarVendedor
 
-            int idVendedor = 15;
+            //int idVendedor = 15;
 
-            var vendedorEliminado = vendedorDl.EliminarVendedorRB(idVendedor);
+            //var vendedorEliminado = vendedorDl.EliminarVendedorRB(idVendedor);
 
-            var mensaje = vendedorEliminado.Result.Message;
-            var vendedor = vendedorEliminado.Result.DataSingle;
+            //var mensaje = vendedorEliminado.Result.Message;
+            //var vendedor = vendedorEliminado.Result.DataSingle;
+
+            //Prueba BuscarVendedor por Texto
+
+            var listaVendedoresEncontrados = vendedorDl.BuscarVendedorRB("1072");
+
+            var mensaje = listaVendedoresEncontrados.Result.Message;
+            var lista = listaVendedoresEncontrados.Result.DataSingle;
 
 
         }
