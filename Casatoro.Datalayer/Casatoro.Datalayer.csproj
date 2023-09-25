@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VendedorDl.cs" />
+    <Compile Include="VentasDl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Casatoro.Entities\Casatoro.Entities.csproj">

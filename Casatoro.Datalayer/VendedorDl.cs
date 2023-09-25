@@ -259,6 +259,10 @@ namespace Casatoro.Datalayer
                 {
                     listaVentasFn = dbContext.fn_lista_ventas().ToList();
                 }
+
+                objResponse.DataSingle = listaVentasFn;
+                objResponse.IsValid = true;
+                objResponse.Message = Messages.ResponseOk;
             }
             catch (Exception ex)
             {
