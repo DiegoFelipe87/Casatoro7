@@ -49,22 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CasatoroModel.Context.cs">
-      <DependentUpon>CasatoroModel.Context.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CasatoroModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CasatoroModel.cs">
-      <DependentUpon>CasatoroModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CasatoroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CasatoroModel.Designer.cs">
-      <DependentUpon>CasatoroModel.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\fn_lista_vendedores_Result.cs">
-      <DependentUpon>CasatoroModel.tt</DependentUpon>
+      <DependentUpon>CasatoroModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\fn_lista_ventas_Result.cs">
       <DependentUpon>CasatoroModel.tt</DependentUpon>
@@ -114,6 +111,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\CasatoroModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

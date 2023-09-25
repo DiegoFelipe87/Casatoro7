@@ -19,9 +19,24 @@ namespace Casatoro.BussinessLayer
         //Metodos
         public List<Ventas> ListaVentas()
         {
-            var listaVendedores = new List<Ventas>();
-            listaVendedores = ventasDl.ListaVentasRB().Result.DataSingle;
-            return listaVendedores;
+            var listaVentas = new List<Ventas>();
+            listaVentas = ventasDl.ListaVentasRB().Result.DataSingle;
+            return listaVentas;
         }
+
+        public ResponseBase<List<fn_lista_ventas_Result>> ListaVentasFn()
+        {
+            var listaVentasFn = new ResponseBase<List<fn_lista_ventas_Result>>();
+            listaVentasFn = ventasDl.ListaVentasFn().Result;
+            return listaVentasFn;
+        }
+
+        public ResponseBase<List<fn_lista_ventas_Result>> BuscarVentasFn(string texto)
+        {
+            var objResponse = new ResponseBase<List<fn_lista_ventas_Result>>();
+            objResponse = ventasDl.BuscarVentasFn(texto).Result;
+            return objResponse;
+        }
+
     }
 }

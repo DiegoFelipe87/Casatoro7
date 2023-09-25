@@ -13,6 +13,7 @@ namespace Casatoro.Datalayer.Models
     
     public partial class fn_lista_ventas_Result
     {
+        public int Id { get; set; }
         public string Vendedor { get; set; }
         public string Cedula { get; set; }
         public string Venta { get; set; }

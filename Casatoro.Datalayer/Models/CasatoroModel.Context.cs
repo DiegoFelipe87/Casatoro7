@@ -34,12 +34,6 @@ namespace Casatoro.Datalayer.Models
         public DbSet<Ventas> Ventas { get; set; }
         public DbSet<VistaVentas> VistaVentas { get; set; }
     
-        [EdmFunction("CasatoroDBEntities", "fn_lista_vendedores")]
-        public virtual IQueryable<fn_lista_vendedores_Result> fn_lista_vendedores()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_lista_vendedores_Result>("[CasatoroDBEntities].[fn_lista_vendedores]()");
-        }
-    
         [EdmFunction("CasatoroDBEntities", "fn_lista_ventas")]
         public virtual IQueryable<fn_lista_ventas_Result> fn_lista_ventas()
         {

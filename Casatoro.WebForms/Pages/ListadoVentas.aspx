@@ -25,12 +25,14 @@
             <asp:GridView ID="GVListaVentas" CssClass="table table-striped" AutoGenerateColumns="False" runat="server">
 
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="Id" />
-                    <asp:BoundField DataField="ValorVenta" HeaderText="ValorVenta" />
-                    <asp:BoundField DataField="NombreComprador" HeaderText="NombreComprador" />
-                    <asp:BoundField DataField="FechaVenta" HeaderText="FechaVenta" />
-                    <asp:BoundField DataField="VendedorId" HeaderText="VendedorId" />
-                    <asp:BoundField DataField="Vehiculos_Id" HeaderText="Vehiculos_Id" />
+                    <asp:BoundField DataField="Id" HeaderText="Id Venta" />
+                    <asp:BoundField DataField="Vendedor" HeaderText="Vendedor" />
+                    <asp:BoundField DataField="Cedula" HeaderText="Cedula" />
+                    <asp:BoundField DataField="Venta" HeaderText="Venta" />
+                    <asp:BoundField DataField="Comprador" HeaderText="Comprador" />
+                    <asp:BoundField DataField="Placa" HeaderText="Placa" />
+                    <asp:BoundField DataField="Color" HeaderText="Color" />
+                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton CommandArgument='<%#Eval("Id") %>'

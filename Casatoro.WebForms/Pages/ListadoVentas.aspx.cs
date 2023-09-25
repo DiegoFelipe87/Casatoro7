@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Casatoro.BussinessLayer;
+using Casatoro.Datalayer.Models;
+using Casatoro.Entities;
 
 namespace Casatoro.WebForms.Pages
 {
@@ -13,19 +15,31 @@ namespace Casatoro.WebForms.Pages
         private VentasBl ventasBl = new VentasBl();
         protected void Page_Load(object sender, EventArgs e)
         {
-            ListarVentas();
+            var texto = CuadroBuscar.Text;
+            ListarVentasFn(texto);
         }
 
-        private void ListarVentas()
+        private void ListarVentasFn(string texto)
         {
-            var listaVentas = ventasBl.ListaVentas();
-            GVListaVentas.DataSource = listaVentas;
+            var listaVentasFn = ventasBl.BuscarVentasFn(texto).DataSingle;
+            GVListaVentas.DataSource = listaVentasFn;
             GVListaVentas.DataBind();
         }
 
         protected void BotonBuscar_OnClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var respuesta = new ResponseBase<List<fn_lista_ventas_Result>>();
+
+            var texto = CuadroBuscar.Text;
+
+            respuesta = ventasBl.BuscarVentasFn(texto);
+
+            if (respuesta.IsValid)
+            {
+                var listaVentasEncontradas = respuesta.DataSingle;
+                GVListaVentas.DataSource = listaVentasEncontradas;
+                GVListaVentas.DataBind();
+            }
         }
 
         protected void EditarVenta_OnClick(object sender, EventArgs e)
