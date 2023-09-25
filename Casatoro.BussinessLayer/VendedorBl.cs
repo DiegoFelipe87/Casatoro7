@@ -57,6 +57,14 @@ namespace Casatoro.BussinessLayer
             return objResponse;
         }
 
+        public ResponseBase<List<sp_VehiculosByCedula_Result>> BuscarVentasPorCedula(string cedula)
+        {
+            var objResponse = new ResponseBase<List<sp_VehiculosByCedula_Result>>();
+
+            objResponse = vendedorDl.BuscarVentasPorCedulaRB(cedula).Result;
+
+            return objResponse;
+        }
 
     }
 
