@@ -9,8 +9,6 @@
             <asp:TextBox ID="CuadroBuscar" runat="server"></asp:TextBox>
             <asp:Button ID="BotonBuscar" OnClick="BotonBuscar_OnClick" CommandArgument="" runat="server" Text="Buscar" />
         </div>
-
-   
     </div>
     
     <div>

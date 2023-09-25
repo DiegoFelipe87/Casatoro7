@@ -222,5 +222,52 @@ namespace Casatoro.Datalayer
 
             return objResponse;
         }
+
+
+        public async Task<ResponseBase<List<VistaVentas>>> ListarVentas()
+        {
+            var objResponse = new ResponseBase<List<VistaVentas>>();
+            var buscarVentasPorCedula = new List<VistaVentas>();
+
+            try
+            {
+                using (var dbContext = new CasatoroDBEntities())
+                {
+                    buscarVentasPorCedula = dbContext.VistaVentas.ToList();
+                }
+
+                objResponse.DataSingle = buscarVentasPorCedula;
+                objResponse.IsValid = true;
+                objResponse.Message = Messages.ResponseOk;
+            }
+            catch (Exception ex)
+            {
+                objResponse.IsValid = false;
+                objResponse.Message = Messages.ResponseException + ex.Message;
+            }
+
+            return objResponse;
+        }
+
+        public async Task<ResponseBase<List<fn_lista_ventas_Result>>>ListaVentasFn()
+        {
+            var objResponse = new ResponseBase<List<fn_lista_ventas_Result>>();
+            var listaVentasFn = new List<fn_lista_ventas_Result>();
+            try
+            {
+                using (var dbContext = new CasatoroDBEntities())
+                {
+                    listaVentasFn = dbContext.fn_lista_ventas().ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                objResponse.IsValid = false;
+                objResponse.Message = Messages.ResponseException + ex.Message;
+            }
+
+            return objResponse;
+        }
+
     }
 }

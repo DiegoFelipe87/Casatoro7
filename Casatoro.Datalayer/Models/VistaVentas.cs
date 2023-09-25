@@ -14,6 +14,7 @@ namespace Casatoro.Datalayer.Models
     
     public partial class VistaVentas
     {
+        public int Id { get; set; }
         public string Venta { get; set; }
         public string Comprador { get; set; }
         public System.DateTime Fecha { get; set; }

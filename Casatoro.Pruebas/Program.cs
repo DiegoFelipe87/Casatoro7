@@ -15,9 +15,9 @@ namespace Casatoro.Pruebas
         {
             VendedorDl vendedorDl = new VendedorDl();
 
-            //Prueba para el metodo VededorDl.BuscarVentasPorCedula
-            List<sp_VehiculosByCedula_Result> buscarVentasPorCedula = new List<sp_VehiculosByCedula_Result>();
-            buscarVentasPorCedula = vendedorDl.BuscarVentasPorCedulaRB("258").Result.DataSingle;
+            ////Prueba para el metodo VededorDl.BuscarVentasPorCedula
+            //List<sp_VehiculosByCedula_Result> buscarVentasPorCedula = new List<sp_VehiculosByCedula_Result>();
+            //buscarVentasPorCedula = vendedorDl.BuscarVentasPorCedulaRB("258").Result.DataSingle;
 
             ////Prueba para el metodo VendedorDl.CrearVendedor
             //var crearVendedor = vendedorDl.CrearVendedorRB("Juanito Ocho", "888");
@@ -60,6 +60,14 @@ namespace Casatoro.Pruebas
 
             //var mensaje = listaVendedoresEncontrados.Result.Message;
             //var lista = listaVendedoresEncontrados.Result.DataSingle;
+
+
+            //Prueba listaVentasFn
+
+            var listaVentasFn = vendedorDl.ListaVentasFn();
+
+            var mensaje = listaVentasFn.Result.Message;
+            var lista = listaVentasFn.Result.DataSingle;
 
 
         }

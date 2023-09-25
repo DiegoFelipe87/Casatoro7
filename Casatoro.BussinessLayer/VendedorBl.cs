@@ -66,6 +66,15 @@ namespace Casatoro.BussinessLayer
             return objResponse;
         }
 
+        public ResponseBase<List<VistaVentas>> ListarVentas()
+        {
+            var objResponse = new ResponseBase<List<VistaVentas>>();
+
+            objResponse = vendedorDl.ListarVentas().Result;
+
+            return objResponse;
+        }
+
     }
 
     
