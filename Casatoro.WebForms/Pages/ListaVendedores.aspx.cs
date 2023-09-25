@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Casatoro.Datalayer.Models;
+using Casatoro.Entities;
+using System.Threading;
 
 namespace Casatoro.WebForms.Pages
 {
@@ -35,6 +38,29 @@ namespace Casatoro.WebForms.Pages
         protected void NuevoVendedor_OnClick(object sender, EventArgs e)
         {
             Response.Redirect("~/Pages/FormularioVendedor.aspx?id=0");
+        }
+
+        protected void EliminarVendedor_OnClick(object sender, EventArgs e)
+        {
+            var respuesta = new ResponseBase<Vendedores>();
+
+            LinkButton eliminarVendedorButton = (LinkButton)sender;
+            string Id = eliminarVendedorButton.CommandArgument;
+
+            respuesta = vendedorBl.EliminarVEndedor(Convert.ToInt32(Id));
+
+            if (respuesta.IsValid)
+            {
+                vendedorEliminado.Text = respuesta.Message + ". Se elimino el vendedor " + respuesta.DataSingle.NombreVendedor;
+            }
+        }
+
+
+        protected void BotonBuscar_OnClick(object sender, EventArgs e)
+        {
+            var textoIngresado = CuadroBuscar.Text;
+
+
         }
     }
 }

@@ -15,6 +15,33 @@ namespace Casatoro.WebForms.Pages
     {
 
         /// <summary>
+        /// CuadroBuscar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CuadroBuscar;
+
+        /// <summary>
+        /// BotonBuscar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BotonBuscar;
+
+        /// <summary>
+        /// vendedorEliminado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label vendedorEliminado;
+
+        /// <summary>
         /// NuevoVendedor control.
         /// </summary>
         /// <remarks>

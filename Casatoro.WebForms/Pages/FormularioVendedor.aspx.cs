@@ -32,11 +32,14 @@ namespace Casatoro.WebForms.Pages
                         txtNombreVendedor.Text = vendedor.NombreVendedor;
                         txtCedulaVendedor.Text = vendedor.CedulaVendedor;
                     }
+                    else
+                    {
+                        btnSubmit.Text = "Crear";
+                    }
                 }
                 else
                 {
                     Response.Redirect("~/Default.aspx");
-                    //btnSubmit.Text = "Guardar";
                 }
             }
         }

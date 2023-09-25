@@ -14,12 +14,7 @@ namespace Casatoro.Datalayer
 {
     public class VendedorDl
     {
-        /// <summary>
-        /// Metodo para crear un nuevo vendedor
-        /// </summary>
-        /// <param name="nombreVendedor"></param>
-        /// <param name="cedulaVendedor"></param>
-        /// <returns></returns>
+   
         public async Task<ResponseBase<Vendedores>> CrearVendedorRB(string nombreVendedor, string cedulaVendedor)
         {
             var objResponse = new ResponseBase<Vendedores>();
@@ -61,11 +56,6 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-        
-        /// <summary>
-        /// Metodo para retornar la lista de todos los vendedores existentes en la BD
-        /// </summary>
-        /// <returns></returns>
         public async Task<ResponseBase<List<Vendedores>>> ListaVendedoresRB()
         {
             var objResponse = new ResponseBase<List<Vendedores>>();
@@ -91,12 +81,6 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-
-        /// <summary>
-        /// Metodo para buscar las ventas de un vendedor ingresando su numero de cedula
-        /// </summary>
-        /// <param name="cedulaVendedor"></param>
-        /// <returns></returns>
         public async Task<ResponseBase<List<sp_VehiculosByCedula_Result>>> BuscarVentasPorCedulaRB(string cedulaVendedor)
         {
             var objResponse = new ResponseBase<List<sp_VehiculosByCedula_Result>>();
@@ -122,12 +106,6 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-
-        /// <summary>
-        /// Metodo para obtener un vendedor por medio de su Id
-        /// </summary>
-        /// <param name="idVendedor"></param>
-        /// <returns></returns>
         public async Task<ResponseBase<Vendedores>> ObtenerVendedorPorIdRB(int idVendedor)
         {
             var objResponse = new ResponseBase<Vendedores>();
@@ -149,12 +127,6 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-
-        /// <summary>
-        /// Metodo para editar un vendedor
-        /// </summary>
-        /// <param name="vendedorAEditar"></param>
-        /// <returns></returns>
         public async Task<ResponseBase<Vendedores>> EditarVendedorRB(Vendedores vendedorAEditar)
         {
             var objResponse = new ResponseBase<Vendedores>();
@@ -199,7 +171,7 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-        public async Task<ResponseBase<Vendedores>> EliminarVendedor(Vendedores vendedorAEliminar)
+        public async Task<ResponseBase<Vendedores>> EliminarVendedorRB(int idVendedor)
         {
             var objResponse = new ResponseBase<Vendedores>();
             var vendedorEliminado = new Vendedores();
@@ -207,7 +179,7 @@ namespace Casatoro.Datalayer
             {
                 using (var dbContext = new CasatoroDBEntities())
                 {
-                    var vendedorEncontradoPorId = dbContext.Vendedores.ToList().Find(x => x.Id == vendedorAEliminar.Id);
+                    var vendedorEncontradoPorId = dbContext.Vendedores.ToList().Find(x => x.Id == idVendedor);
 
                     dbContext.Vendedores.Remove(vendedorEncontradoPorId);
                     dbContext.SaveChanges();
@@ -224,6 +196,12 @@ namespace Casatoro.Datalayer
                 objResponse.Message = Messages.ResponseException;
             }
 
+            return objResponse;
+        }
+
+        public async Task<ResponseBase<List<Vendedores>>> BuscarVendedor(string texto)
+        {
+            var objResponse = new ResponseBase<List<Vendedores>>();
             return objResponse;
         }
     }

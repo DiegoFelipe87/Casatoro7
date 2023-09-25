@@ -47,14 +47,9 @@ namespace Casatoro.Pruebas
 
             //Prueba EliminarVendedor
 
-            var vendedorAEliminar = new Vendedores()
-            {
-                    Id = 13,
-                    NombreVendedor = "Juanito Ocho",
-                    CedulaVendedor = "888"
-            };
+            int idVendedor = 15;
 
-            var vendedorEliminado = vendedorDl.EliminarVendedor(vendedorAEliminar);
+            var vendedorEliminado = vendedorDl.EliminarVendedorRB(idVendedor);
 
             var mensaje = vendedorEliminado.Result.Message;
             var vendedor = vendedorEliminado.Result.DataSingle;
