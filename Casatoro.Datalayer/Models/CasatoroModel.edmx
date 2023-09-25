@@ -102,6 +102,17 @@ warning 6002: The table/view 'CasatoroDB.dbo.VistaVentas' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_lista_vendedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Id" Type="int" Nullable="false" />
+                <Property Name="NombreVendedor" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="CedulaVendedor" Type="nvarchar(max)" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="fn_lista_ventas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -113,19 +124,8 @@ warning 6002: The table/view 'CasatoroDB.dbo.VistaVentas' does not have a primar
                 <Property Name="Comprador" Type="nvarchar(max)" Nullable="false" />
                 <Property Name="Placa" Type="nvarchar(max)" Nullable="false" />
                 <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+                <Property Name="Marca" Type="nvarchar(max)" Nullable="false" />
                 <Property Name="Fecha" Type="char" MaxLength="10" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fn_obtener_vendedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdVendedor" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="Id" Type="int" Nullable="false" />
-                <Property Name="NombreVendedor" Type="nvarchar(max)" Nullable="false" />
-                <Property Name="CedulaVendedor" Type="nvarchar(max)" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -180,6 +180,11 @@ FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CasatoroDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fn_lista_vendedores_Result">
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="NombreVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CedulaVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="fn_lista_ventas_Result">
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Vendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -188,12 +193,8 @@ FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
           <Property Name="Comprador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Placa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-        </ComplexType>
-        <ComplexType Name="fn_obtener_vendedor_Result">
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="NombreVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CedulaVendedor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </ComplexType>
         <EntityType Name="Marcas">
           <Key>
@@ -314,10 +315,8 @@ FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
             <End Role="Vendedores" EntitySet="Vendedores" />
             <End Role="Ventas" EntitySet="Ventas" />
           </AssociationSet>
+          <FunctionImport Name="fn_lista_vendedores" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_lista_vendedores_Result)" />
           <FunctionImport Name="fn_lista_ventas" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_lista_ventas_Result)" />
-          <FunctionImport Name="fn_obtener_vendedor" IsComposable="true" ReturnType="Collection(CasatoroDBModel.fn_obtener_vendedor_Result)">
-            <Parameter Name="IdVendedor" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_Crear_Marca">
             <Parameter Name="NombreMarca" Mode="In" Type="String" />
           </FunctionImport>
@@ -403,6 +402,15 @@ FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_lista_vendedores" FunctionImportName="fn_lista_vendedores">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CasatoroDBModel.fn_lista_vendedores_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
+                <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_lista_ventas" FunctionImportName="fn_lista_ventas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CasatoroDBModel.fn_lista_ventas_Result">
@@ -413,16 +421,8 @@ FROM [dbo].[VistaVentas] AS [VistaVentas]</DefiningQuery>
                 <ScalarProperty Name="Comprador" ColumnName="Comprador" />
                 <ScalarProperty Name="Placa" ColumnName="Placa" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="CasatoroDBModel.Store.fn_obtener_vendedor" FunctionImportName="fn_obtener_vendedor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CasatoroDBModel.fn_obtener_vendedor_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
-                <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Casatoro.BussinessLayer;
+using Casatoro.Datalayer;
 using Casatoro.Datalayer.Models;
 using Casatoro.Entities;
 
@@ -44,12 +45,22 @@ namespace Casatoro.WebForms.Pages
 
         protected void EditarVenta_OnClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected void EliminarVenta_OnClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var respuesta = new ResponseBase<Ventas>();
+
+            LinkButton eliminarVendedorButton = (LinkButton)sender;
+            string Id = eliminarVendedorButton.CommandArgument;
+
+            respuesta = ventasBl.EliminarVenta(Convert.ToInt32(Id));
+
+            if (respuesta.IsValid)
+            {
+                ventaEliminada.Text = respuesta.Message + ". Se eliminó la venta con Id " + respuesta.DataSingle.Id;
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Casatoro.Datalayer.Models
 {
     using System;
     
-    public partial class fn_obtener_vendedor_Result
+    public partial class fn_lista_vendedores_Result
     {
         public int Id { get; set; }
         public string NombreVendedor { get; set; }

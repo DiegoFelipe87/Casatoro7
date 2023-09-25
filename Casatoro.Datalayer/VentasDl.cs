@@ -35,7 +35,6 @@ namespace Casatoro.Datalayer
             return objResponse;
         }
 
-
         public async Task<ResponseBase<List<fn_lista_ventas_Result>>> ListaVentasFn()
         {
             var objResponse = new ResponseBase<List<fn_lista_ventas_Result>>();
@@ -69,7 +68,7 @@ namespace Casatoro.Datalayer
             {
                 using (var dbContext = new CasatoroDBEntities())
                 {
-                    listaVentasEncontradas = dbContext.fn_lista_ventas().ToList().Where(x => x.Vendedor.Contains(texto) || x.Cedula.Contains(texto) || x.Venta.Contains(texto) || x.Comprador.Contains(texto) || x.Placa.Contains(texto) || x.Color.Contains(texto) || x.Fecha.Contains(texto)).ToList();
+                    listaVentasEncontradas = dbContext.fn_lista_ventas().Where(x => x.Vendedor.Contains(texto) || x.Cedula.Contains(texto) || x.Venta.Contains(texto) || x.Comprador.Contains(texto) || x.Placa.Contains(texto) || x.Color.Contains(texto) || x.Fecha.Contains(texto) || x.Marca.Contains(texto)).ToList();
                 }
 
                 objResponse.DataSingle = listaVentasEncontradas;
@@ -84,6 +83,34 @@ namespace Casatoro.Datalayer
 
             return objResponse;
 
+        }
+
+        public async Task<ResponseBase<Ventas>> EliminarVentaFn(int idVenta)
+        {
+            var objResponse = new ResponseBase<Ventas>();
+            var ventaEliminada = new Ventas();
+            try
+            {
+                using (var dbContext = new CasatoroDBEntities())
+                {
+                    var ventaEncontradoPorId = dbContext.Ventas.ToList().Find(x => x.Id == idVenta);
+
+                    dbContext.Ventas.Remove(ventaEncontradoPorId);
+                    dbContext.SaveChanges();
+                    ventaEliminada = ventaEncontradoPorId;
+                }
+
+                objResponse.DataSingle = ventaEliminada;
+                objResponse.IsValid = true;
+                objResponse.Message = Messages.ResponseOk;
+            }
+            catch (Exception ex)
+            {
+                objResponse.IsValid = false;
+                objResponse.Message = Messages.ResponseException;
+            }
+
+            return objResponse;
         }
     }
 }

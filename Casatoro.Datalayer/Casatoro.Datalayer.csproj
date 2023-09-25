@@ -63,10 +63,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CasatoroModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\fn_lista_ventas_Result.cs">
+    <Compile Include="Models\fn_lista_vendedores_Result.cs">
       <DependentUpon>CasatoroModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\fn_obtener_vendedor_Result.cs">
+    <Compile Include="Models\fn_lista_ventas_Result.cs">
       <DependentUpon>CasatoroModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Marcas.cs">

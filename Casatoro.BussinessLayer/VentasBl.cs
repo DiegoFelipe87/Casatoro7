@@ -38,5 +38,12 @@ namespace Casatoro.BussinessLayer
             return objResponse;
         }
 
+        public ResponseBase<Ventas> EliminarVenta(int idVenta)
+        {
+            var objResponse = new ResponseBase<Ventas>();
+            objResponse = ventasDl.EliminarVentaFn(idVenta).Result;
+            return objResponse;
+        }
+
     }
 }

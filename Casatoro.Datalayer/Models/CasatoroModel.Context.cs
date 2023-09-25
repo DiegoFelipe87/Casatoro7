@@ -34,20 +34,16 @@ namespace Casatoro.Datalayer.Models
         public DbSet<Ventas> Ventas { get; set; }
         public DbSet<VistaVentas> VistaVentas { get; set; }
     
+        [EdmFunction("CasatoroDBEntities", "fn_lista_vendedores")]
+        public virtual IQueryable<fn_lista_vendedores_Result> fn_lista_vendedores()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_lista_vendedores_Result>("[CasatoroDBEntities].[fn_lista_vendedores]()");
+        }
+    
         [EdmFunction("CasatoroDBEntities", "fn_lista_ventas")]
         public virtual IQueryable<fn_lista_ventas_Result> fn_lista_ventas()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_lista_ventas_Result>("[CasatoroDBEntities].[fn_lista_ventas]()");
-        }
-    
-        [EdmFunction("CasatoroDBEntities", "fn_obtener_vendedor")]
-        public virtual IQueryable<fn_obtener_vendedor_Result> fn_obtener_vendedor(Nullable<int> idVendedor)
-        {
-            var idVendedorParameter = idVendedor.HasValue ?
-                new ObjectParameter("IdVendedor", idVendedor) :
-                new ObjectParameter("IdVendedor", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_obtener_vendedor_Result>("[CasatoroDBEntities].[fn_obtener_vendedor](@IdVendedor)", idVendedorParameter);
         }
     
         public virtual int sp_Crear_Marca(string nombreMarca)

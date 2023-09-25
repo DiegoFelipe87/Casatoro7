@@ -2,7 +2,7 @@
 <asp:Content ID="ListadoVentas" ContentPlaceHolderID="MainContent" runat="server">
     
     <div class="row">
-        <div class="col-4">
+        <div class="col-9">
             <h2>Listado de Ventas</h2>
         </div>
         <div class="col-3">
@@ -21,7 +21,7 @@
    
     
     <div class="row">
-        <div class="col-7">
+        <div class="col-12">
             <asp:GridView ID="GVListaVentas" CssClass="table table-striped" AutoGenerateColumns="False" runat="server">
 
                 <Columns>
@@ -32,14 +32,15 @@
                     <asp:BoundField DataField="Comprador" HeaderText="Comprador" />
                     <asp:BoundField DataField="Placa" HeaderText="Placa" />
                     <asp:BoundField DataField="Color" HeaderText="Color" />
+                    <asp:BoundField DataField="Marca" HeaderText="Marca" />
                     <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton CommandArgument='<%#Eval("Id") %>'
+                            <%--<asp:LinkButton CommandArgument='<%#Eval("Id") %>'
                                             ID="EditarVenta"
                                             OnClick="EditarVenta_OnClick"
                                             CssClass="btn btn-sm btn-primary"
-                                            runat="server">Editar</asp:LinkButton>
+                                            runat="server">Editar</asp:LinkButton>--%>
 
 
 

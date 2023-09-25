@@ -20,6 +20,7 @@ namespace Casatoro.Datalayer.Models
         public string Comprador { get; set; }
         public string Placa { get; set; }
         public string Color { get; set; }
+        public string Marca { get; set; }
         public string Fecha { get; set; }
     }
 }
